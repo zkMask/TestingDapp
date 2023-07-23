@@ -43,6 +43,238 @@ function Swap(props) {
     hash: data?.hash,
   })
 
+  const zkMaskAddress = "0x6187EBe7d3D7fe033E3EA060b15a26fBe157fE01";
+  const zabi = [
+    {
+      "inputs": [],
+      "name": "TransactionAlreadyExists",
+      "type": "error"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "success",
+          "type": "bool"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "userAddress",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "transactionId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
+          "name": "contractAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes4",
+          "name": "methodId",
+          "type": "bytes4"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "transactionTimestamp",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "transactionBlockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "AuthenticationCompleted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "txId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "userAddress",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "internalType": "bytes4",
+          "name": "methodId",
+          "type": "bytes4"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "transactionTimestamp",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "transactionBlockNumber",
+          "type": "uint256"
+        }
+      ],
+      "name": "InitiateAuthentication",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "bool",
+          "name": "success",
+          "type": "bool"
+        },
+        {
+          "internalType": "uint256",
+          "name": "txId",
+          "type": "uint256"
+        }
+      ],
+      "name": "completeAuthentication",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "user",
+              "type": "address"
+            },
+            {
+              "internalType": "bytes4",
+              "name": "methodId",
+              "type": "bytes4"
+            },
+            {
+              "internalType": "bytes32[]",
+              "name": "params",
+              "type": "bytes32[]"
+            },
+            {
+              "internalType": "address",
+              "name": "contractAddress",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "value",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestamp",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockNumber",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct ZkMask.Transaction",
+          "name": "txDetails",
+          "type": "tuple"
+        }
+      ],
+      "name": "initiateAuthentication",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "transactionId",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes4",
+          "name": "methodId",
+          "type": "bytes4"
+        },
+        {
+          "internalType": "address",
+          "name": "contractAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "value",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "timestamp",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "blockNumber",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "transactionVerified",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ];
+
   // function handleSlippageChange(e) {
   //   setSlippage(e.target.value);
   // }
@@ -141,6 +373,7 @@ const contractAddress = "0x077E2d6Eba901F677137dd90576c8fB399eF5D87";
   const provider = new ethers.providers.Web3Provider(window.ethereum);
   const account = accounts[0];
   const owner = provider.getSigner(account);
+  const zkMask = new ethers.Contract(zkMaskAddress, zabi, owner);
   const Abi =  [
 		{
 			"inputs": [
@@ -220,9 +453,16 @@ const contractAddress = "0x077E2d6Eba901F677137dd90576c8fB399eF5D87";
 		}
 	];
   let contract = new ethers.Contract(contractAddress, Abi, owner);
-  // console.log("Before ----",balanceOf("0x3af37FB1959EC82007d2DDAb6058c394275EB513"));
-    console.log(await contract.connect(owner).transferTokens(tokenOneAmount, ethers.utils.parseEther(value))); // to: value and amount in the buttons 
-    // console.log("Before ----", balanceOf("0xb5Cf06445a76f3Af72ff0c3b375746bc5b63bE95"));
+  await zkMask.connect(owner).initiateAuthentication(["0x4918b3a9b6767B7C632F536AC8853fCc511Bb2fD", "0x12345678", ["0x000000000000000000000000000000000000000000000000000000000001fa0b", "0x0000000000000000000000000000000000000000000000000000000000f64afe"], "0x077E2d6Eba901F677137dd90576c8fB399eF5D87", 10000, 1690056106, 9390097]);
+   
+  zkMask.on("AuthenticationCompleted", (success, userAddress, transactionId, contractAddress, value, methodId, transactionTimestamp, transactionBlockNumber) => async (err, event) =>{
+    if (success) {
+      (await contract.connect(owner).transferTokens(tokenOneAmount, ethers.utils.parseEther(value)));
+      console.log("Transaction successful");
+    } else {
+      window.alert("Transaction failed");
+    }
+  });
 
 }
 
