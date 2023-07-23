@@ -8,6 +8,7 @@ import {
 import tokenList from "../tokenList.json";
 import axios from "axios";
 import { useSendTransaction, useWaitForTransaction } from "wagmi";
+import { ethers } from "ethers";
 
 function Swap(props) {
   const { address, isConnected } = props;
@@ -45,8 +46,8 @@ function Swap(props) {
   // function handleSlippageChange(e) {
   //   setSlippage(e.target.value);
   // }
-
-const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
+  
+const contractAddress = "0x077E2d6Eba901F677137dd90576c8fB399eF5D87";
 
   function changeAmount2(e) {
     setValue(e.target.value);
@@ -128,18 +129,103 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
   },[isSuccess])
   async function onTransfer(){
 
-  [signer] = await ethers.getSigners();
-        let transfer = await ethers.getContractAt(
-          "Transfer",
-          contractAddress,
-          signer
-        );
-      
-        transfer.transferTokens(); // to: value and amount in the buttons 
+  // [signer] = await ethers.getSigners();
+  //       let transfer = await ethers.getContractAt(
+  //         "Transfer",
+  //         contractAddress,
+  //         signer
+  //       );
+  const accounts = await window.ethereum.request({
+    method: 'eth_requestAccounts',
+  });
+  const provider = new ethers.providers.Web3Provider(window.ethereum);
+  const account = accounts[0];
+  const owner = provider.getSigner(account);
+  const Abi =  [
+		{
+			"inputs": [
+				{
+					"internalType": "address",
+					"name": "_tokenAddress",
+					"type": "address"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
+		{
+			"stateMutability": "payable",
+			"type": "fallback"
+		},
+		{
+			"inputs": [],
+			"name": "getContractBalance",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "getContractOwner",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "token",
+			"outputs": [
+				{
+					"internalType": "contract IERC20",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "address payable",
+					"name": "to",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "transferTokens",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"stateMutability": "payable",
+			"type": "receive"
+		}
+	];
+  let contract = new ethers.Contract(contractAddress, Abi, owner);
+  // console.log("Before ----",balanceOf("0x3af37FB1959EC82007d2DDAb6058c394275EB513"));
+    console.log(await contract.connect(owner).transferTokens(tokenOneAmount, ethers.utils.parseEther(value))); // to: value and amount in the buttons 
+    // console.log("Before ----", balanceOf("0xb5Cf06445a76f3Af72ff0c3b375746bc5b63bE95"));
 
 }
 
- 
   return (
     <>
       {contextHolder}
@@ -178,7 +264,7 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
         
           </div>
         </div>
-        <div className="swapButton" disabled={!tokenOneAmount && !isConnected} onClock={onTransfer} >Transfer</div>
+        <div className="swapButton" disabled={!tokenOneAmount && !isConnected} onClick={onTransfer} >Transfer</div>
       </div>
     </>
   );
