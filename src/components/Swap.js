@@ -8,12 +8,13 @@ import {
 import tokenList from "../tokenList.json";
 import axios from "axios";
 import { useSendTransaction, useWaitForTransaction } from "wagmi";
+import { ethers } from "ethers";
+
 
 function Swap(props) {
   const { address, isConnected } = props;
   const [messageApi, contextHolder] = message.useMessage();
   // const [slippage, setSlippage] = useState(2.5);
-  const [tokenOneAmount, setTokenOneAmount] = useState(null);
   const [tokenTwoAmount, setTokenTwoAmount] = useState(null);
   const [tokenOne, setTokenOne] = useState(tokenList[0]);
   const [tokenTwo, setTokenTwo] = useState(tokenList[1]);
@@ -42,10 +43,6 @@ function Swap(props) {
     hash: data?.hash,
   })
 
-  // function handleSlippageChange(e) {
-  //   setSlippage(e.target.value);
-  // }
-
 const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
 
   function changeAmount2(e) {
@@ -55,7 +52,7 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
 
   function switchTokens() {
     setPrices(null);
-    setTokenOneAmount(null);
+    setAddressTo(null);
     setTokenTwoAmount(null);
     const one = tokenOne;
     const two = tokenTwo;
@@ -71,7 +68,7 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
 
   function modifyToken(i){
     setPrices(null);
-    setTokenOneAmount(null);
+    setAddressTo(null);
     setTokenTwoAmount(null);
     if (changeToken === 1) {
       setTokenOne(tokenList[i]);
@@ -83,7 +80,7 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
   }
 
   function changeAddress1(e) {
-    setTokenOneAmount(e.target.value);
+    setAddressTo(e.target.value);
    
   }
 
@@ -135,7 +132,7 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
           signer
         );
       
-        transfer.transferTokens(); // to: value and amount in the buttons 
+        transfer.transferTokens(addressTo,value); // to: value and amount in the buttons 
 
 }
 
@@ -164,7 +161,7 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
         <div className="inputs">
           <Input
             placeholder="Enter Address"
-            value={tokenOneAmount}
+            value={addressTo}
             onChange= {changeAddress1}
           />
           <Input placeholder="Enter Amount" value={value} onChange={changeAmount2} />
@@ -178,7 +175,7 @@ const contractAddress = "0x8D99163c2C04Df214b0546A7a40F8427b0F70C97";
         
           </div>
         </div>
-        <div className="swapButton" disabled={!tokenOneAmount && !isConnected} onClock={onTransfer} >Transfer</div>
+        <div className="swapButton" disabled={!addressTo && !isConnected} onClick={onTransfer} >Transfer</div>
       </div>
     </>
   );
