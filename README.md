@@ -1,67 +1,23 @@
-# Getting Started with Create React App
+# ZKMask 
+## (Easy and Secure transactions using 2 Factor Authentication)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Once the keys are lost the Funds are too! 
+But ZKMask adds an extra layer of Security to save all those funds by leveraging AI Face Verification and ZK Proofs.
 
-## Available Scripts
+ZKMask is the ultimate 2 Factor Authentication app needed to secure all transactions through Face Verification and Prooving it by Zero Knowledge Proof. The DeepFace AI model verifies if the owner of the key is the one signing the transaction and the Zero Knowledge smart contract generates the proof for the same after which only the user signs the transaction and makes it go through. This 2 Factor Authentication using the  Deepface AI model and Zero Knowledge Proof brings reliability to the security layer added through ZKMask.
 
-In the project directory, you can run:
+## 
+The problem of losing funds due to losing control over the private key is a very common problem that many crypto users face. ZKKMask solves this problem by adding an additional layer of security by which even the wallets with compromised keys wallets remain safe. This additional layer of security uses concepts of Artificial Intelligence and Zero-Knowledge for verification using various Face alignments, detection, embeddings and features extraction and ------------- using Zero Knowledge Concepts.
 
-### `npm start`
+Users have to first register their Identity on the ZKMask mobile app by capturing their photo for future verification. Later this sample is used as a sample for face verification when the user wants to perform 2FA before signing a transaction. During 2FA the captured face image is taken and passed through the DeepFace AI model that checks if the captured image has any resemblance with the images registered already on our App. If YES the image is passed for Proof generation by ZK Model or else is rejected and 2FA fails and the transaction security is maintained. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+In the ZK Model the face ---------------------------------------------------.
+This ensures that the face verification done by the AI model is done correctly and ZK gives the Proof for same.
+ 
+The App is Deployed on Goerli, Gnosis Chiado testnet, ---------------------------.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
